@@ -40,13 +40,12 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Html')
-            ->renderSidebarMinimized();
+            ->setTitle('Html');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('The Label', 'fas fa-list', Post::class);
+        yield MenuItem::linkToDashboard('Главная', 'fa fa-home');
+        yield MenuItem::linkToCrud('Посты', 'fa-solid fa-file', Post::class);
     }
 }
