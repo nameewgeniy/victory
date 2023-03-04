@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
 class PostCrudController extends AbstractCrudController
@@ -14,13 +15,11 @@ class PostCrudController extends AbstractCrudController
         return Post::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
-            //TextField::new('title'),
+            // TextField::new('title'),
             TextEditorField::new('description'),
         ];
     }
-
 }

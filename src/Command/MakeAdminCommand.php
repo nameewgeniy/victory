@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Entity\User;
@@ -12,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 #[AsCommand(
@@ -20,13 +23,10 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 )]
 class MakeAdminCommand extends Command
 {
-
-
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EntityManagerInterface $mn,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -34,7 +34,6 @@ class MakeAdminCommand extends Command
     {
         $this
             ->addArgument('password', InputArgument::REQUIRED, 'Admin password');
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
