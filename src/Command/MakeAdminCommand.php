@@ -3,15 +3,16 @@
 namespace App\Command;
 
 use App\Entity\User;
+use App\Security\Enum\UserRolesEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 #[AsCommand(
     name: 'app:make:admin',
@@ -19,6 +20,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 )]
 class MakeAdminCommand extends Command
 {
+
 
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
@@ -47,9 +49,9 @@ class MakeAdminCommand extends Command
             $password
         );
 
-        $user->setEmail('admin@admin.admin')
+        $user->setEmail(env('ADMIN_EMAIL'))
             ->setPassword($hashedPassword)
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRoles([UserRolesEnum::Admin]);
 
         $this->mn->persist($user);
         $this->mn->flush();
