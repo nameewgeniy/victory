@@ -7,12 +7,15 @@ namespace App\Command;
 use App\Entity\User;
 use App\Security\Enum\UserRolesEnum;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
@@ -26,6 +29,7 @@ class MakeAdminCommand extends Command
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EntityManagerInterface $mn,
+        private readonly ContainerBagInterface $params
     ) {
         parent::__construct();
     }
@@ -36,6 +40,10 @@ class MakeAdminCommand extends Command
             ->addArgument('password', InputArgument::REQUIRED, 'Admin password');
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -48,7 +56,7 @@ class MakeAdminCommand extends Command
             $password
         );
 
-        $user->setEmail(env('ADMIN_EMAIL'))
+        $user->setEmail($this->params->get('admin_email'))
             ->setPassword($hashedPassword)
             ->setRoles([UserRolesEnum::Admin]);
 
