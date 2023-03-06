@@ -30,6 +30,9 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $file = null;
+
     public function __construct()
     {
         $this->postCategories = new ArrayCollection();
@@ -99,6 +102,18 @@ class Post
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

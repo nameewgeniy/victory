@@ -6,7 +6,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Entity\PostCategory;
-use App\Entity\VideoFile;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -50,6 +49,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Главная', 'fa fa-home');
         yield MenuItem::linkToCrud('Посты', 'fa-solid fa-file', Post::class);
         yield MenuItem::linkToCrud('Категории', 'fa-solid fa-file', PostCategory::class);
-        yield MenuItem::linkToCrud('Видео', 'fa-solid fa-file', VideoFile::class);
     }
 }
