@@ -18,8 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
-
 #[AsCommand(
     name: 'app:make:admin',
     description: 'Add a short description for your command',

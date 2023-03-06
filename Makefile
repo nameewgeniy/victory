@@ -18,4 +18,4 @@ entity.regenerate:
 	$(CONTAINER) php bin/console make:entity --regenerate
 
 lint:
-	$(CONTAINER) sh -c "php vendor/bin/php-cs-fixer fi	x"
+	$(CONTAINER) sh -c "php vendor/bin/php-cs-fixer fix"
