@@ -6,6 +6,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Entity\PostCategory;
+use App\Entity\Teaser;
+use App\Entity\TeaserCategory;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -22,9 +24,9 @@ class DashboardController extends AbstractDashboardController
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
-        return $this->redirect($adminUrlGenerator->setController(PostCrudController::class)->generateUrl());
+        // return $this->redirect($adminUrlGenerator->setController(PostCrudController::class)->generateUrl());
 
         // Option 2. You can make your dashboard redirect to different pages depending on the user
         //
@@ -32,10 +34,10 @@ class DashboardController extends AbstractDashboardController
         //     return $this->redirect('...');
         // }
 
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
+//         Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
+//         (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
+//
+        return $this->render('admin/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -47,7 +49,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Главная', 'fa fa-home');
+        yield MenuItem::linkToCrud('Категории постов', 'fa-solid fa-file', PostCategory::class);
         yield MenuItem::linkToCrud('Посты', 'fa-solid fa-file', Post::class);
-        yield MenuItem::linkToCrud('Категории', 'fa-solid fa-file', PostCategory::class);
+        yield MenuItem::linkToCrud('Категории тизеров', 'fa-solid fa-file', TeaserCategory::class);
+        yield MenuItem::linkToCrud('Тизеры', 'fa-solid fa-file', Teaser::class);
     }
 }
