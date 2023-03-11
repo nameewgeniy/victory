@@ -19,3 +19,6 @@ entity.regenerate:
 
 lint:
 	$(CONTAINER) sh -c "php vendor/bin/php-cs-fixer fix"
+
+run:
+	@cd build && docker-compose up -d

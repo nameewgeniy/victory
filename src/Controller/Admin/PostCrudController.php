@@ -25,9 +25,11 @@ class PostCrudController extends AbstractCrudController
             TextEditorField::new('description'),
             AssociationField::new('owner'),
             ImageField::new('file')
-                ->setUploadedFileNamePattern('[year]/[month]/[day]/[slug]-[contenthash].[extension]')
+                ->setUploadedFileNamePattern('files/[slug]-[contenthash].[extension]')
                 ->setUploadDir('public/files'),
             AssociationField::new('postCategories')
+                ->setFormTypeOption('by_reference', false),
+            AssociationField::new('teaserCategories')
                 ->setFormTypeOption('by_reference', false),
         ];
     }

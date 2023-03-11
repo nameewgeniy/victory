@@ -2,26 +2,47 @@
 
 {% block title %}Post{% endblock %}
 
+
 {% block body %}
-    <h1>Post</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ post.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ post.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ post.description|raw }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap" width="30" height="24">
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="card border-0 pt-3">
+            <h5 class="card-title post-name pb-3">{{ post.name }}</h5>
+            <div id="player"></div>
+            <script>
+                var player = new Playerjs({id:"player", file:"/{{ post.file }}"});
+            </script>
+            <p class="card-text post-description">{{ post.description|raw }}</p>
+        </div>
+    </div>
 
-    <a href="{{ path('app_index') }}">back to list</a>
+
+    <style>
+        #player {
+            max-width: 640px;
+        }
+
+        .post-name {
+            text-align: left !important;
+            font-size: 30px !important;
+            float: left;
+            width: 100%;
+            font-weight: 600 !important;
+            letter-spacing: -0.03em !important;
+            color: #000;
+        }
+
+        .post-description {
+            font-size: 16px;
+            line-height: 1.85;
+        }
+    </style>
 
 {% endblock %}

@@ -33,9 +33,13 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $file = null;
 
+    #[ORM\ManyToMany(targetEntity: TeaserCategory::class)]
+    private Collection $teaserCategories;
+
     public function __construct()
     {
         $this->postCategories = new ArrayCollection();
+        $this->teaserCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,6 +118,30 @@ class Post
     public function setFile(string $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TeaserCategory>
+     */
+    public function getTeaserCategories(): Collection
+    {
+        return $this->teaserCategories;
+    }
+
+    public function addTeaserCategory(TeaserCategory $teaserCategory): self
+    {
+        if (!$this->teaserCategories->contains($teaserCategory)) {
+            $this->teaserCategories->add($teaserCategory);
+        }
+
+        return $this;
+    }
+
+    public function removeTeaserCategory(TeaserCategory $teaserCategory): self
+    {
+        $this->teaserCategories->removeElement($teaserCategory);
 
         return $this;
     }

@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\TeaserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TeaserRepository::class)]
@@ -28,6 +29,12 @@ class Teaser
 
     #[ORM\ManyToMany(targetEntity: TeaserCategory::class, inversedBy: 'teasers')]
     private Collection $category;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $url = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $blockIp = [];
 
     public function __construct()
     {
@@ -102,5 +109,29 @@ class Teaser
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getBlockIp(): array
+    {
+        return $this->blockIp;
+    }
+
+    public function setBlockIp(?array $blockIp): self
+    {
+        $this->blockIp = $blockIp;
+
+        return $this;
     }
 }
