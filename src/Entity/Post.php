@@ -20,7 +20,7 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 2000)]
     private ?string $description = null;
 
     #[ORM\ManyToMany(targetEntity: PostCategory::class, mappedBy: 'posts')]
@@ -115,7 +115,7 @@ class Post
         return $this->file;
     }
 
-    public function setFile(string $file): self
+    public function setFile(string|null $file): self
     {
         $this->file = $file;
 

@@ -5,28 +5,90 @@
 
 {% block body %}
 
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar border-bottom-2 border-bottom pb-0 mb-3 ">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap" width="30" height="24">
+                <svg viewBox="0 0 395.52 108.60037654146662" height="50" width="150"><path d="M394.594 23.293C392.735 12.02 387.435 8.886 387.435 8.886 371.165-2.725 350.86-0.222 332.619 1.446 300.414 1.514 268.339 3.994 236.208 5.324 168.767 5.527 100.749 2.19 33.643 10.419 27.339 12.944-6.54 10.915 1.121 24.736 3.129 30.485 10.456 36.865 10.232 42.141 11.236 43.065 12.631 40.946 13.226 42.276 15.309 45.861 18.711 44.17 21.501 46.289 17.614 51.948 20.403 56.66 23.062 61.597 18.377 62.882 12.371 62.274 9.675 66.535 9.396 69.623 7.89 69.037 6.235 68.902 5.026 68.812 2.59 69.15 2.999 70.119 4.394 73.434-1.594 75.35 2.162 78.596-0.422 82.114 3.948 85.157 3.353 88.967 3.278 89.734 3.687 90.388 4.338 90.568 7.22 91.538 3.018 93.431 3.464 95.483 33.029 109.506 65.104 99.812 95.394 106.26 103.259 101.751 97.346 107.86 100.489 106.913 102.943 105.809 104.728 110.385 107.499 107.793 107.927 107.049 107.276 105.29 108.8 105.628 109.6 105.809 110.307 105.764 110.418 104.727 110.586 103.171 109.117 104.14 108.726 103.329 112.947 99.225 111.906 108.988 115.866 108.582 115.68 107.387 114.528 105.673 116.889 105.899 119.232 104.185 119.306 102.765 121.389 106.62 121.463 107.455 121.835 108.041 122.43 108.447 128.938 104.253 135.409 109.935 142.233 108.041 146.417 105.967 150.433 109.168 154.672 108.379 156.16 107.748 157.666 106.62 159.098 108.514 176.632 108.92 195.319 107.229 211.943 108.582 256.364 106.057 303.835 109.619 350.674 106.282 361.719 104.997 373.192 103.171 383.958 101.705 383.958 101.705 392.679 97.692 392.679 79.656S394.538 63.874 394.817 49.513C395.096 35.152 396.398 34.565 394.538 23.293Z" opacity="1" fill="#f6f6f6" data-fill-palette-color="tertiary"></path><g transform="matrix(1,0,0,1,55.76832,26.230666666666668)"><svg width="283.98335999999995" viewBox="5.699999809265137 -35 177.04000854492188 35" height="56.13904320813328" data-palette-color="#90adbb"><path d="M31.3-35L34.95-35 34.95 0 31.9 0 9.4-28.4 9.4 0 5.7 0 5.7-35 8.75-35 31.3-6.6 31.3-35ZM72.5 0L68.3-9.35 48.8-9.35 44.6 0 40.75 0 56.75-35 60.4-35 76.4 0 72.5 0ZM50.15-12.35L66.95-12.35 58.55-31.15 50.15-12.35ZM87.25 0L87.25-31.8 74.95-31.8 74.95-35 103.25-35 103.25-31.8 90.95-31.8 90.95 0 87.25 0ZM109.14 0L109.14-35 112.84-35 112.84 0 109.14 0ZM149.19-35L152.94-35 137.44 0 133.79 0 118.29-35 122.29-35 135.69-4.6 149.19-35ZM161.69-3.2L182.74-3.2 182.74 0 157.99 0 157.99-35 181.99-35 181.99-31.8 161.69-31.8 161.69-19.35 179.79-19.35 179.79-16.2 161.69-16.2 161.69-3.2Z" opacity="1" transform="matrix(1,0,0,1,0,0)" fill="#90adbb" class="undefined-text-0" data-fill-palette-color="quaternary" id="text-0"></path></svg></g></svg>
             </a>
         </div>
     </nav>
     <div class="container">
-        <div class="card border-0 pt-3">
+        {% if teasers %}
+            <div class="teasers row">
+                {% for teaser in teasers[0:3] %}
+                    <div class="card teaser border-0 pb-3 col-12 col-sm-6 col-md-3">
+                        <img src="/{{ teaser.file }}" class="card-img-top" alt="...">
+                        <div class="py-2">
+                            <a class="card-title-link" target="_blank" href="{{ teaser.url }}">
+                                <p class="card-title">{{ teaser.name }}</p>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        {% endif %}
+        <div class="card border-0 pt-3 mb-3">
             <h5 class="card-title post-name pb-3">{{ post.name }}</h5>
             <div id="player"></div>
             <script>
                 var player = new Playerjs({id:"player", file:"/{{ post.file }}"});
             </script>
-            <p class="card-text post-description">{{ post.description|raw }}</p>
+            <div class="card-text post-description py-2">{{ post.description|raw }}</div>
+            {% if next %}
+                <div>
+                    <a
+                            href="{{ path('app_post_show', {'id': next.id, 'exclude': app.request.get('exclude') ~ '-' ~ next.id}) }}"
+                            class="btn btn-danger custom">Следующее видео ->
+                    </a>
+                </div>
+            {% endif %}
         </div>
+
+        {% if teasers %}
+            <div class="teasers row pt-3">
+                {% for teaser in teasers[3:10] %}
+                    <div class="card teaser border-0 pb-3 col-12 col-sm-6 col-md-3">
+                        <img src="/{{ teaser.file }}" class="card-img-top" alt="...">
+                        <div class="py-2">
+                            <a class="card-title-link" target="_blank" href="{{ teaser.url }}">
+                                <p class="card-title">{{ teaser.name }}</p>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        {% endif %}
+
     </div>
 
 
     <style>
-        #player {
+        .card {
             max-width: 640px;
+        }
+
+        .card.teaser {
+            /*max-width: 390px;*/
+        }
+
+        .teaser .card-title {
+            color: #000;
+            font-weight: 600 !important;
+            letter-spacing: -0.03em !important;
+            font-size: 17px;
+        }
+
+        .card-title-link {
+            text-decoration:none;
+        }
+
+        .custom.btn-danger {
+            color: white;
+            float: right;
+            width: 200px;
+            height: 40px;
         }
 
         .post-name {

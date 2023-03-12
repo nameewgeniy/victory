@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Repository\TeaserRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,13 +23,19 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_post_show', methods: ['GET'])]
-    public function show(Post $post): Response
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/{id}/{exclude}', name: 'app_post_show', defaults: ['exclude' => '0'], methods: ['GET'])]
+    public function show(Post $post, string $exclude, PostRepository $postRepository, TeaserRepository $teaserRepository): Response
     {
+        $excludeIds = explode('-', $exclude);
+        $excludeIds[] = $post->getId();
+
         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'next' => $postRepository->getNextPost(array_values($excludeIds)),
+            'teasers' => $teaserRepository->findAll(),
         ]);
     }
-
-
 }

@@ -22,3 +22,6 @@ lint:
 
 run:
 	@cd build && docker-compose up -d
+
+fix:
+	$(CONTAINER) php bin/console doctrine:fixtures:load --append
