@@ -1,4 +1,2 @@
-echo 'alias sf="php bin/console"' >> ~/.bashrc
-
-sf doctrine:migrations:migrate -n
-sf assets:install %PUBLIC_DIR%
+php bin/console doctrine:migrations:migrate -n
+php bin/console assets:install %PUBLIC_DIR%
