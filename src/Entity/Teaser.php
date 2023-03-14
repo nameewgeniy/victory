@@ -36,7 +36,7 @@ class Teaser
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $blockIp = [];
 
-    #[ORM\OneToMany(mappedBy: 'teaser', targetEntity: Event::class)]
+    #[ORM\OneToMany(mappedBy: 'teaser', targetEntity: Event::class, cascade: ['persist', 'remove'])]
     private Collection $events;
 
     public function __construct()

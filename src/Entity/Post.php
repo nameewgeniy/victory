@@ -36,7 +36,7 @@ class Post
     #[ORM\ManyToMany(targetEntity: TeaserCategory::class)]
     private Collection $teaserCategories;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Event::class)]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Event::class, cascade: ['persist', 'remove'])]
     private Collection $events;
 
     public function __construct()
