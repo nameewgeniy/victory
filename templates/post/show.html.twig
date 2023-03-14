@@ -16,15 +16,20 @@
         {% if teasers %}
             <div class="teasers row">
                 {% for teaser in teasers[0:3] %}
-                    <div class="card teaser border-0 pb-3 col-12 col-sm-6 col-md-3">
-                        <img src="/{{ teaser.file }}" class="card-img-top" alt="...">
+                    <div class="card small-teaser border-0 pb-3 col-12 col-sm-6 col-md-3">
+                        <div class="row g-0">
+                            <div class="col-4 ">
+                                <a class="card-title-link link-image-small-teaser" style="background-image: url('/{{ teaser.file }}'); width: 100px; height: 100px" target="_blank" href="{{ teaser.url }}">
+                                </a>
+                            </div>
+                            <div class="col-8 ps-2">
+                                <a class="card-title-link" target="_blank" href="{{ teaser.url }}">
+                                    <p class="card-title">{{ teaser.name }}</p>
+                                </a>
+                            </div>
+                        </div>
                         <img src="{{ path('app_event_teaser_view', {'teaser': teaser.id,'post': post.id}) }}" alt="" class="d-none">
                         <img src="{{ path('app_event_teaser_click', {'teaser': teaser.id,'post': post.id}) }}" alt="" class="d-none">
-                        <div class="py-2">
-                            <a class="card-title-link" target="_blank" href="{{ teaser.url }}">
-                                <p class="card-title">{{ teaser.name }}</p>
-                            </a>
-                        </div>
                     </div>
                 {% endfor %}
 
@@ -68,12 +73,31 @@
 
 
     <style>
+
+        .link-image-small-teaser {
+            background-size: cover;
+        }
+
         .card {
             max-width: 640px;
         }
 
         .card.teaser {
             /*max-width: 390px;*/
+        }
+
+        .small-teaser  .card-title {
+            color: #000;
+            font-weight: 500 !important;
+            letter-spacing: -0.03em !important;
+            transition: 150ms;
+            line-height: 130%;
+            font-size: 17px;
+        }
+
+        .small-teaser .card-title-link {
+            display: block;
+            height: 100%;
         }
 
         .teaser .card-title {
