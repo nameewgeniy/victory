@@ -18,6 +18,8 @@
                 {% for teaser in teasers[0:3] %}
                     <div class="card teaser border-0 pb-3 col-12 col-sm-6 col-md-3">
                         <img src="/{{ teaser.file }}" class="card-img-top" alt="...">
+                        <img src="{{ path('app_event_teaser_view', {'teaser': teaser.id,'post': post.id}) }}" alt="" class="d-none">
+                        <img src="{{ path('app_event_teaser_click', {'teaser': teaser.id,'post': post.id}) }}" alt="" class="d-none">
                         <div class="py-2">
                             <a class="card-title-link" target="_blank" href="{{ teaser.url }}">
                                 <p class="card-title">{{ teaser.name }}</p>
@@ -30,6 +32,7 @@
         {% endif %}
         <div class="card border-0 pt-3 mb-3">
             <h5 class="card-title post-name pb-3">{{ post.name }}</h5>
+            <img src="{{ path('app_event_view', {'post': post.id}) }}" alt="" class="d-none">
             <div id="player"></div>
             <script>
                 var player = new Playerjs({id:"player", file:"/{{ post.file }}"});

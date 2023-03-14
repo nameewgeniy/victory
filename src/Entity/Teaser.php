@@ -36,9 +36,13 @@ class Teaser
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $blockIp = [];
 
+    #[ORM\OneToMany(mappedBy: 'teaser', targetEntity: Event::class)]
+    private Collection $events;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +135,36 @@ class Teaser
     public function setBlockIp(?array $blockIp): self
     {
         $this->blockIp = $blockIp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setTeaser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getTeaser() === $this) {
+                $event->setTeaser(null);
+            }
+        }
 
         return $this;
     }

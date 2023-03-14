@@ -36,10 +36,14 @@ class Post
     #[ORM\ManyToMany(targetEntity: TeaserCategory::class)]
     private Collection $teaserCategories;
 
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Event::class)]
+    private Collection $events;
+
     public function __construct()
     {
         $this->postCategories = new ArrayCollection();
         $this->teaserCategories = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,6 +146,36 @@ class Post
     public function removeTeaserCategory(TeaserCategory $teaserCategory): self
     {
         $this->teaserCategories->removeElement($teaserCategory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getPost() === $this) {
+                $event->setPost(null);
+            }
+        }
 
         return $this;
     }
