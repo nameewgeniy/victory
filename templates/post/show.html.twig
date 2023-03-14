@@ -33,7 +33,7 @@
                                 <a class="card-title-link link-image-small-teaser"
                                    style="/*background-image: url('/{{ teaser.file }}');*/"
                                    target="_blank" href="{{ teaser.url }}">
-                                    <img class="img-fluid" src="/{{ teaser.file }}" alt="">
+                                    <img class="img-fluid rounded" src="/{{ teaser.file }}" alt="">
                                 </a>
                             </div>
                             <div class="col-8 ps-2">
@@ -51,7 +51,7 @@
 
             </div>
         {% endif %}
-        <div class="card border-0 pt-3 mb-3">
+        <div class="card border-0 pt-2 mb-3">
             <h5 class="card-title post-name pb-3">{{ post.name }}</h5>
             <img src="{{ path('app_event_view', {'post': post.id}) }}" alt="" class="d-none">
             <div id="player"></div>
