@@ -28,10 +28,10 @@
             <div class="teasers row">
                 {% for teaser in teasers[0:3] %}
                     <div class="card small-teaser border-0 pb-3 col-12 col-sm-6 col-md-3">
-                        <div class="row g-0">
+                        <div class="row g-0" style="min-height: 100px">
                             <div class="col-4 ">
                                 <a class="card-title-link link-image-small-teaser"
-                                   style="background-image: url('/{{ teaser.file }}'); max-width: 150px; max-height: 150px"
+                                   style="background-image: url('/{{ teaser.file }}');"
                                    target="_blank" href="{{ teaser.url }}">
                                 </a>
                             </div>
@@ -182,7 +182,7 @@
             font-weight: normal;
             color: #000;
             text-decoration: none;
-            font-family: Roboto !important
+            font-family: Roboto !important;
             font-size: 16px;
             line-height: 1.85;
         }
