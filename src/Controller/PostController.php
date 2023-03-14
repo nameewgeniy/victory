@@ -31,11 +31,13 @@ class PostController extends AbstractController
     {
         $excludeIds = explode('-', $exclude);
         $excludeIds[] = $post->getId();
+        $teasers = $teaserRepository->findAll();
+        shuffle($teasers);
 
         return $this->render('post/show.html.twig', [
             'post' => $post,
             'next' => $postRepository->getNextPost(array_values($excludeIds)),
-            'teasers' => $teaserRepository->findAll(),
+            'teasers' => $teasers,
         ]);
     }
 }
